@@ -40,6 +40,7 @@
 ;(scroll-bar-mode -1)
 
 ;; tabs
+(setq-default indent-tabs-mode nil)
 (setq-default indent-line-function 4)
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
@@ -120,9 +121,9 @@
 
 ;; C and C++
 (defun my-c-mode-common-hook ()
-  "Custom C mode hooks. K&R style braces."
+  "Custom C mode hooks. X style braces."
   (interactive)
-  (c-set-style "k&r")
+  (c-set-style "linux")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
   (setq-default indent-line-function 4)
@@ -213,6 +214,8 @@
 (add-hook 'cmake-mode-hook 'my-custom-bindings)
 (add-hook 'markdown-mode-hook 'my-custom-bindings)
 (add-hook 'nxml-mode-hook 'my-custom-bindings)
+(add-hook 'html-mode-hook 'my-custom-bindings)
+(add-hook 'css-mode-hook 'my-custom-bindings)
 
 ;; auto completes code snippets
 (require 'yasnippet)
@@ -259,19 +262,25 @@
     (save-excursion
       (goto-char (point-min))
       (let ((depth 0) str start start-depth)
+		;; Search #if/#else/#endif using regular expression.
         (while (re-search-forward "^\\s-*#\\s-*\\(if\\|else\\|endif\\)" limit 'move)
           (setq str (match-string 1))
+		  ;; Handle #if.
           (if (string= str "if")
               (progn
                 (setq depth (1+ depth))
+				;; Handle neariest 0.
                 (when (and (null start) (looking-at "\\s-+0"))
                   (setq start (match-end 0)
                         start-depth depth)))
+			;; Handle #else, here we can decorate #if 0->#else block using 'font-lock-comment-face'.
             (when (and start (= depth start-depth))
               (c-put-font-lock-face start (match-beginning 0) 'font-lock-comment-face)
               (setq start nil))
+			;; Handle #endif, return to upper block if possible.
             (when (string= str "endif")
               (setq depth (1- depth)))))
+		;; Corner case when there are only #if 0 (May be you are coding now))
         (when (and start (> depth 0))
           (c-put-font-lock-face start (point) 'font-lock-comment-face)))))
   nil)
@@ -320,7 +329,7 @@
   (interactive "r")
   (shell-command-on-region
    pmin pmax
-   "astyle --style=java --indent=spaces=4 --pad-oper --pad-header --unpad-paren --add-brackets --keep-one-line-blocks --keep-one-line-statements --align-pointer=type "
+   "astyle --style=kr --indent=spaces=4 --pad-oper --pad-header --unpad-paren --add-brackets --keep-one-line-blocks --keep-one-line-statements --align-pointer=type "
    (current-buffer) t
    (get-buffer-create "*Astyle Errors*") t))
 
@@ -420,3 +429,11 @@
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-dark-laptop)
+
+
+;; spaces/tab override
+(add - hook 'after-change-major-mode-hook
+ '(lambda()
+   (setq - default indent-tabs-mode nil)
+       (setq c - basic - indent 4)
+       (setq tab - width 4)))
