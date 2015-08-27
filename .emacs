@@ -432,8 +432,8 @@
 
 
 ;; spaces/tab override
-(add - hook 'after-change-major-mode-hook
+(add-hook 'after-change-major-mode-hook
  '(lambda()
-   (setq - default indent-tabs-mode nil)
-       (setq c - basic - indent 4)
-       (setq tab - width 4)))
+   (setq-default indent-tabs-mode nil)
+       (setq c-basic-indent 4)
+       (setq tab-width 4)))
