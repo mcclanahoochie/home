@@ -123,7 +123,7 @@
 (defun my-c-mode-common-hook ()
   "Custom C mode hooks. X style braces."
   (interactive)
-  (c-set-style "linux")
+  (c-set-style "k&r")
   (setq c-basic-offset 4)
   (setq c++-basic-offset 4)
   (setq-default indent-line-function 4)
