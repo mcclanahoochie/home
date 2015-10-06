@@ -26,7 +26,7 @@ alias m="matlab -nojvm -nosplash"
 alias M="matlab -nodesktop -nosplash"
 
 # workspace
-alias w='cd ~/workspace/vrplayer/android'
+alias w='cd ~/workspace'
 
 # functions
 h()        { history | tail -15; }
@@ -135,7 +135,7 @@ export PATH=${PATH}:/usr/bin/
 
 # android
 export ANDROID_SDK=/Users/chris/workspace/adt-bundle-mac-x86_64/sdk
-export ANDROID_NDK=/Users/chris/workspace/android-ndk-r10c
+export ANDROID_NDK=/Users/chris/workspace/android-ndk-r10d
 export PATH=${PATH}:${ANDROID_SDK}/platform-tools
 export PATH=${PATH}:${ANDROID_SDK}/tools
 export PATH=${PATH}:${ANDROID_NDK}
