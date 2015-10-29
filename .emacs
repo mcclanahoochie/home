@@ -35,9 +35,10 @@
 ;;  )
 
 ;; save real estate.
-(menu-bar-mode -1)
-;(tool-bar-mode -1)
-;(scroll-bar-mode -1)
+(ignore-errors  ;; for emacs in iTerm2
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1))
 
 ;; tabs
 (setq-default indent-tabs-mode nil)
@@ -162,10 +163,13 @@
 (add-to-list 'auto-mode-alist '("\\.inl$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
 
+(add-to-list 'auto-mode-alist '("\\.c$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
+
 (add-to-list 'auto-mode-alist '("\\.mk$" . makefile-mode))
 (add-to-list 'auto-mode-alist '("Makefile\\." . makefile-mode))
-(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
-(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake$" . sh-mode))
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
@@ -322,7 +326,7 @@
 
 ;; font
 ;(set-default-font "-microsoft-Consolas-bold-bold-bold-*-15-*-*-*-m-0-iso10646-1")
-;(set-default-font "-apple-Menlo-medium-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+(set-default-font "-apple-Menlo-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 
 ;; astyle
 (defun astyle-this-buffer (pmin pmax)
@@ -412,24 +416,11 @@
   (define-key makefile-mode-map "\C-c\C-c" 'compile))
 (add-hook 'makefile-mode-hook 'my-makefile-mode)
 
-;; cmake
-(autoload 'cmake-mode "cmake-mode" nil t)
-(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
-(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
-
 ;; modeline buffer list
 (iswitchb-mode 1)
 (setq
  iswitchb-max-to-show 7
  iswitchb-default-method 'samewindow)
-
-
-;; put last so if anything goes wrong, emacs looks way different
-;; color theme
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-dark-laptop)
-
 
 ;; spaces/tab override
 (add-hook 'after-change-major-mode-hook
@@ -437,3 +428,13 @@
    (setq-default indent-tabs-mode nil)
        (setq c-basic-indent 4)
        (setq tab-width 4)))
+
+;; load environment
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+;; put last so if anything goes wrong, emacs looks way different
+;; color theme
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-dark-laptop)
