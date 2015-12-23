@@ -220,6 +220,7 @@
 (add-hook 'nxml-mode-hook 'my-custom-bindings)
 (add-hook 'html-mode-hook 'my-custom-bindings)
 (add-hook 'css-mode-hook 'my-custom-bindings)
+(add-hook 'python-mode-hook 'my-custom-bindings)
 
 ;; auto completes code snippets
 (require 'yasnippet)
@@ -432,6 +433,9 @@
 ;; load environment
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+;; redraw the display before done processing queued input events
+(setq redisplay-dont-pause t)
 
 ;; put last so if anything goes wrong, emacs looks way different
 ;; color theme
