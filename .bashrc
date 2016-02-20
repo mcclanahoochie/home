@@ -26,7 +26,7 @@ alias m="matlab -nojvm -nosplash"
 alias M="matlab -nodesktop -nosplash"
 
 # workspace
-alias w='cd ~/workspace'
+alias w='cd ~/workspace/c1_vr2.0'
 
 # functions
 h()        { history | tail -15; }
@@ -70,8 +70,8 @@ force_color_prompt=yes
 # timestap history
 export HISTFILE=~/.bash_history
 echo "# $(date)" >>$HISTFILE
-export HISTFILESIZE=10000
-export HISTSIZE=10000
+export HISTFILESIZE=10000000
+export HISTSIZE=10000000
 export HISTCONTROL=ignoreboth # Don't store duplicate adjacent items in the history
 shopt -s histappend
 export PROMPT_COMMAND="history -a && history -r" # each cmd updates hist
@@ -97,8 +97,6 @@ fi
 # setup PATH (top of list is highest precedence)
 [[ `uname` =~ CYGWIN.* ]] || PATH=   # windows already set PATH
 for p in \
-    $HOME/.bin \
-    /Applications/Aquamacs.app/Contents/MacOS/bin/ \
     /usr/local/bin \
     /usr/local/sbin \
     /opt/local/bin \
@@ -144,3 +142,7 @@ export NDK_HOME=${ANDROID_NDK}
 
 # emacs
 alias aquamacs='open /Applications/Aquamacs.app/'
+
+# python
+PYTHONPATH="/Library/Python/2.7/site-packages/:$PYTHONPATH"
+export PYTHONPATH

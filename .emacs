@@ -144,6 +144,7 @@
 ;; connect
 (add-hook 'c-mode-common-hook 'my-whitespace-hook)
 (add-hook 'java-mode-hook 'my-whitespace-hook)
+(add-hook 'javascript-mode-hook 'my-whitespace-hook)
 (add-hook 'f90-mode-hook 'my-whitespace-hook)
 (add-hook 'go-mode-hook 'my-whitespace-hook)
 
@@ -188,6 +189,8 @@
 (add-to-list 'auto-mode-alist '("\\.fs$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.vs$" . c++-mode))
 
+(add-to-list 'auto-mode-alist '("\\.js$" . javascript-mode))
+
 ;; history
 (savehist-mode 1)
 (setq savehist-file "~/.emacs.d/history")
@@ -221,6 +224,7 @@
 (add-hook 'html-mode-hook 'my-custom-bindings)
 (add-hook 'css-mode-hook 'my-custom-bindings)
 (add-hook 'python-mode-hook 'my-custom-bindings)
+(add-hook 'javascript-mode-hook 'my-custom-bindings)
 
 ;; auto completes code snippets
 (require 'yasnippet)
@@ -339,8 +343,10 @@
    (get-buffer-create "*Astyle Errors*") t))
 
 ;; option/ctrl  scroll zoom
-(global-set-key [C-mouse-4] 'text-scale-increase)
-(global-set-key [C-mouse-5] 'text-scale-decrease)
+;; (global-set-key [C-mouse-4] 'text-scale-increase)
+;; (global-set-key [C-mouse-5] 'text-scale-decrease)
+(global-set-key [M-wheel-up]   'text-scale-increase)
+(global-set-key [M-wheel-down] 'text-scale-decrease)
 
 ;; eshell
 (defun my-eshell-setup ()
