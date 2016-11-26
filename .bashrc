@@ -26,7 +26,7 @@ alias m="matlab -nojvm -nosplash"
 alias M="matlab -nodesktop -nosplash"
 
 # workspace
-alias w='cd ~/workspace/c1_vr2.0'
+alias w='cd ~/workspace'
 
 # functions
 h()        { history | tail -15; }
@@ -62,19 +62,16 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
+# colored prompt, if the terminal has the capability
 force_color_prompt=yes
 
-# timestap history
-export HISTFILE=~/.bash_history
-echo "# $(date)" >>$HISTFILE
-export HISTFILESIZE=10000000
-export HISTSIZE=10000000
-export HISTCONTROL=ignoreboth # Don't store duplicate adjacent items in the history
-shopt -s histappend
-export PROMPT_COMMAND="history -a && history -r" # each cmd updates hist
+# history
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=100000                   # big big history
+export HISTFILESIZE=100000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # GIT PS1 and auto complete
 if [ -r ~/.git-prompt.sh ]; then
@@ -119,9 +116,10 @@ export VISUAL=nano
 export EDITOR=nano
 export ALTERNATE_EDITOR=nano
 
-# paths
+# cuda paths
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64/:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/local/cuda/lib/:$LD_LIBRARY_PATH
+export CUDA_HOME=/usr/local/cuda/
 
 # up-arrow-history
 bind '"\e[A": history-search-backward'

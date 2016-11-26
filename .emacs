@@ -443,6 +443,9 @@
 ;; redraw the display before done processing queued input events
 (setq redisplay-dont-pause t)
 
+;; jump to definition
+(dumb-jump-mode)
+
 ;; put last so if anything goes wrong, emacs looks way different
 ;; color theme
 (require 'color-theme)
